@@ -37,7 +37,7 @@ const value = {
 }
 
 
-return <MovieContext.Provider>
+return <MovieContext.Provider value={value}>
     {Children}
 </MovieContext.Provider>
 
