@@ -14,7 +14,7 @@ const movies = [
   
 ];
 const handlesearch = () => {
-
+alert(searchQuery)
 };
 
     return (
