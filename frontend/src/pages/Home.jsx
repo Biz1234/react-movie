@@ -20,7 +20,9 @@ const handlesearch = () => {
     return (
 <div className="home">
     <form onSubmit={handlesearch} className="search-form">
-        <input type="text" placeholder="serach for movies.." className="search-input" value={searchQuery}/>
+        <input type="text" placeholder="serach for movies.." className="search-input" value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        />
 <button type="submit" className="search-button">search</button>
 
 
