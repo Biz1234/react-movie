@@ -12,8 +12,10 @@ const movies = [
     {id: 3, title: "the matrix", release_date: "1999"},
   
 ];
-const handlesearch = () => {
+const handlesearch = (e) => {
+    e.preventDefault()
 alert(searchQuery)
+setSearchQuery("......")
 };
 
     return (
