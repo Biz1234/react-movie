@@ -1,8 +1,11 @@
 
+import { use } from "react";
 import MovieCard from "../components/MovieCard";
-
+import { useState } from "react";
 
 function Home(){
+const [searchQuery, setSearchQuery] = useState("");
+
 
 const movies = [
     {id: 1, title: "john wick", release_date: "2020"},
