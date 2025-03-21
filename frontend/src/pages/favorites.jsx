@@ -23,3 +23,4 @@ const movies = [
 
     )
 }
+export default Home

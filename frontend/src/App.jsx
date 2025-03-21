@@ -1,6 +1,7 @@
 
 import './App.css'
 import MovieCard from './components/MovieCard'
+import Home from './pages/favorites';
 function App() {
  
   return (
