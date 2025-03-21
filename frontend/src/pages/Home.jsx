@@ -47,7 +47,7 @@ catch (err){
     finally {
         setLoading(false)
     }
-    setSearchQuery("")
+   
   };
 
   return (
