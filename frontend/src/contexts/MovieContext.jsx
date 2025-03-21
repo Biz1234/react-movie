@@ -29,7 +29,12 @@ const isFavorite = (movieId) => {
     return favorites.some(movie => movie.id === movieId)
 }
 
-const 
+const value = {
+    favorites,
+    addFavorites,
+    removeFromFavorites,
+    isFavorite
+}
 
 
 return <MovieContext.Provider>
