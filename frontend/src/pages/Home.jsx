@@ -24,7 +24,7 @@ const loadPopularMovies = async () => {
         setLoading(false)
     }
 }
-
+loadPopularMovies()
 
 }, [])
   
