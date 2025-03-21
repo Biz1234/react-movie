@@ -30,9 +30,24 @@ loadPopularMovies()
   
   
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    alert(searchQuery);
+if (!searchQuery.trim()) return 
+if (loading) return
+setLoading(true)
+try {
+    const searchResult = await searchMovies(searchQuery)
+    setMovies(searchResult)
+    setError(null)
+}
+catch (err){
+    console.log(err)
+    setError("failed to search movies..")
+}
+    finally {
+        setLoading(false)
+    }
+    setSearchQuery("")
   };
 
   return (
@@ -50,17 +65,19 @@ loadPopularMovies()
         </button>
       </form>
 
-      <div className="movies-grid">
-        {movies
-          .filter((movie) =>
-            movie.title.toLowerCase().startsWith(searchQuery.toLowerCase())
-          )
-          .map((movie) => (
-            <MovieCard movie={movie} key={movie.id} />
-          ))}
-      </div>
-    </div>
+{error && <div className="error-message">{error}</div>}
+{loading ? (
+
+    <div className="loading">loading...</div>
+) : (
+
+  <div className="movies-grid">
+{movies.map((movie) =>(
+    <MovieCard movie={movie} key={movie.id}/>
+))}
+  </div>  
+)}
+</div>
   );
 }
-
 export default Home;
