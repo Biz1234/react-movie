@@ -1,7 +1,7 @@
 
 
 
-function favorite(){
+function Favorites(){
 
 return (
 <div className="favorites=empty">
@@ -16,4 +16,4 @@ return (
 )
 
 }
-export default favorite
+export default Favorites
