@@ -1,8 +1,217 @@
+/* App.css - Main application layout and components */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .main-content {
-    flex: 1;
-    padding: 2rem;
-    box-sizing: border-box;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+  flex: 1;
+  padding-top: 80px; /* Account for fixed navbar */
+}
+
+/* Header/Footer styles if needed */
+.app-header {
+  background-color: var(--primary-dark);
+  color: var(--text-light);
+  padding: 1rem 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+body[data-theme="light"] .app-header {
+  background-color: var(--primary-light);
+  color: var(--text-dark);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.app-footer {
+  background-color: var(--primary-dark);
+  color: var(--text-light);
+  padding: 2rem 0;
+  text-align: center;
+  margin-top: auto;
+}
+
+body[data-theme="light"] .app-footer {
+  background-color: var(--primary-light);
+  color: var(--text-dark);
+}
+
+/* Button styles */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: var(--accent-green);
+  color: var(--primary-dark);
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn:hover {
+  background-color: #7DCE76;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 2px solid var(--accent-green);
+  color: var(--text-light);
+}
+
+body[data-theme="light"] .btn-secondary {
+  color: var(--text-dark);
+}
+
+.btn-secondary:hover {
+  background-color: var(--accent-green);
+  color: var(--primary-dark);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Card styles */
+.card {
+  background-color: var(--bg-secondary-dark);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: var(--transition);
+}
+
+body[data-theme="light"] .card {
+  background-color: var(--bg-secondary-light);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+body[data-theme="light"] .card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Form styles */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+body[data-theme="light"] .form-label {
+  color: var(--text-dark);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--bg-secondary-dark);
+  color: var(--text-light);
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+body[data-theme="light"] .form-input,
+body[data-theme="light"] .form-select,
+body[data-theme="light"] .form-textarea {
+  background-color: #EDEDED;
+  color: var(--text-dark);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-green);
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Alert/Message styles */
+.alert {
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1rem;
+}
+
+.alert-error {
+  background-color: rgba(207, 102, 121, 0.2);
+  color: var(--error-color);
+  border: 1px solid rgba(207, 102, 121, 0.3);
+}
+
+.alert-success {
+  background-color: rgba(143, 227, 136, 0.2);
+  color: var(--success-color);
+  border: 1px solid rgba(143, 227, 136, 0.3);
+}
+
+.alert-info {
+  background-color: rgba(79, 195, 247, 0.2);
+  color: #4FC3F7;
+  border: 1px solid rgba(79, 195, 247, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 70px;
   }
+  
+  .container {
+    padding: 0 0.5rem;
+  }
+  
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .card {
+    padding: 1rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .navbar,
+  .btn,
+  .favorite-btn {
+    display: none !important;
+  }
+  
+  .main-content {
+    padding-top: 0;
+  }
+  
+  body {
+    color: #000;
+    background: #fff;
+  }
+}

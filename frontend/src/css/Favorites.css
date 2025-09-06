@@ -1,51 +1,194 @@
 .favorites {
-    padding: 2rem;
-    width: 100%;
-    box-sizing: border-box;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: calc(100vh - 80px);
+  background-color: #0D1B1E;
+}
+
+.favorites h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 2.5rem;
+  color: #FFFFFF;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.favorites h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background-color: #8FE388;
+  border-radius: 2px;
+}
+
+.favorites-count {
+  text-align: center;
+  color: #8A9A9C;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.favorites-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: rgba(143, 227, 136, 0.1);
+  border-radius: 12px;
+  margin: 2rem auto;
+  max-width: 600px;
+  border: 2px dashed rgba(143, 227, 136, 0.3);
+}
+
+.favorites-empty h2 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: #8FE388;
+  text-shadow: none;
+}
+
+.favorites-empty h2::after {
+  display: none;
+}
+
+.favorites-empty p {
+  color: #8A9A9C;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.explore-link {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  background-color: #8FE388;
+  color: #0D1B1E;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.explore-link:hover {
+  background-color: #7DCE76;
+  transform: translateY(-2px);
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+/* Animation for favorites */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.movies-grid > * {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Light theme styles */
+[data-theme="light"] .favorites {
+  background-color: #F5F5F5;
+}
+
+[data-theme="light"] .favorites h2 {
+  color: #0D1B1E;
+}
+
+[data-theme="light"] .favorites-count {
+  color: #5A6A6C;
+}
+
+[data-theme="light"] .favorites-empty {
+  background-color: rgba(46, 110, 49, 0.1);
+  border: 2px dashed rgba(46, 110, 49, 0.3);
+}
+
+[data-theme="light"] .favorites-empty h2 {
+  color: #2E6E31;
+}
+
+[data-theme="light"] .favorites-empty p {
+  color: #5A6A6C;
+}
+
+[data-theme="light"] .explore-link {
+  background-color: #2E6E31;
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .explore-link:hover {
+  background-color: #256328;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .favorites {
+    padding: 1.5rem;
   }
   
   .favorites h2 {
-    margin-bottom: 2rem;
-    text-align: center;
-    font-size: 2.5rem;
-    color: #ffffff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
   }
   
   .favorites-empty {
-    text-align: center;
-    padding: 4rem 2rem;
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    margin: 2rem auto;
-    max-width: 600px;
+    padding: 3rem 1.5rem;
+    margin: 1.5rem;
   }
   
   .favorites-empty h2 {
-    margin-bottom: 1rem;
-    font-size: 2rem;
-    color: #e50914;
+    font-size: 1.8rem;
   }
   
   .favorites-empty p {
-    color: #999;
-    font-size: 1.2rem;
-    line-height: 1.6;
+    font-size: 1.1rem;
   }
   
-  
-  /* Animation for new favorites being added */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .movies-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .favorites {
+    padding: 1rem;
   }
   
-  .movies-grid > * {
-    animation: fadeIn 0.3s ease-out forwards;
+  .favorites h2 {
+    font-size: 1.8rem;
   }
+  
+  .movies-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .favorites-empty {
+    padding: 2rem 1rem;
+  }
+  
+  .favorites-empty h2 {
+    font-size: 1.6rem;
+  }
+  
+  .favorites-empty p {
+    font-size: 1rem;
+  }
+}
