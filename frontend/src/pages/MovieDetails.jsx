@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getMovieDetails } from "../services/api";
 import "../css/MovieDetails.css";
 import ReactPlayer from 'react-player';
 
 function MovieDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,6 +25,10 @@ function MovieDetails() {
     loadMovie();
   }, [id]);
 
+  const handleGoBack = () => {
+    navigate(-1); // Go back to previous page
+  };
+
   if (loading) return <div className="loading">Loading movie details...</div>;
   if (error) return <div className="error-message">{error}</div>;
   if (!movie) return null;
@@ -36,6 +41,11 @@ function MovieDetails() {
   return (
     <div className="movie-details">
       <div className="movie-container">
+        {/* Back Button */}
+        <button className="back-button" onClick={handleGoBack}>
+          ←  
+        </button>
+
         {/* Backdrop with title overlay */}
         {movie.backdrop_path && (
           <div className="movie-backdrop">

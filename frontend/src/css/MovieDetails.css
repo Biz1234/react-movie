@@ -344,3 +344,59 @@
     font-size: 0.9rem;
   }
 }
+
+
+
+
+
+/* Back Button Styles */
+.back-button {
+  background-color: #8FE388;
+  color: #0D1B1E;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.back-button:hover {
+  background-color: #7DCE76;
+  transform: translateY(-2px);
+}
+
+.back-button:active {
+  transform: translateY(0);
+}
+
+/* Light theme back button */
+[data-theme="light"] .back-button {
+  background-color: #2E6E31;
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .back-button:hover {
+  background-color: #256328;
+}
+
+/* Mobile responsiveness for back button */
+@media (max-width: 768px) {
+  .back-button {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .back-button {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+  }
+}
