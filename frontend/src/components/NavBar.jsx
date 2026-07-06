@@ -1,25 +1,28 @@
 import { Link, useLocation } from "react-router-dom";
 import "../css/NavBar.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { FaBars, FaTimes, FaSun, FaMoon } from "react-icons/fa";
+import { FaBars, FaTimes, FaSun, FaMoon, FaFilm } from "react-icons/fa";
 
 function NavBar() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  // Apply theme class to body
   useEffect(() => {
-    document.body.setAttribute("data-theme", theme);
-  }, [theme]);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
-      <nav className="navbar">
+      <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
         <div className="navbar-brand">
           <Link to="/" className="brand">
-             Boza Movies 
+            <FaFilm className="brand-icon" />
+            Boza Movies
           </Link>
         </div>
 
@@ -33,13 +36,11 @@ function NavBar() {
           </Link>
           <Link
             to="/favorites"
-            className={`nav-link ${
-              location.pathname === "/favorites" ? "active" : ""
-            }`}
+            className={`nav-link ${location.pathname === "/favorites" ? "active" : ""}`}
           >
             Favorites
           </Link>
-          <button onClick={toggleTheme} className="theme-toggle">
+          <button onClick={toggleTheme} className="theme-toggle" aria-label="Toggle theme">
             {theme === "light" ? <FaMoon /> : <FaSun />}
           </button>
         </div>
@@ -48,6 +49,7 @@ function NavBar() {
         <button
           className="hamburger mobile-only"
           onClick={() => setSidebarOpen(true)}
+          aria-label="Open menu"
         >
           <FaBars />
         </button>
@@ -57,37 +59,34 @@ function NavBar() {
       <div
         className={`sidebar-overlay ${sidebarOpen ? "show" : ""}`}
         onClick={() => setSidebarOpen(false)}
-      ></div>
+      />
 
       {/* Sidebar Menu */}
-      <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
-  <button className="close-btn" onClick={() => setSidebarOpen(false)}>
-    <FaTimes />
-  </button>
+      <div className={`sidebar ${sidebarOpen ? "open" : ""}`} aria-hidden={!sidebarOpen}>
+        <button className="close-btn" onClick={() => setSidebarOpen(false)} aria-label="Close menu">
+          <FaTimes />
+        </button>
 
-  {/* Column layout */}
-  <div className="sidebar-links">
-    <Link
-      to="/"
-      className={`nav-link ${location.pathname === "/" ? "active" : ""}`}
-      onClick={() => setSidebarOpen(false)}
-    >
-      Home
-    </Link>
-    <Link
-      to="/favorites"
-      className={`nav-link ${location.pathname === "/favorites" ? "active" : ""}`}
-      onClick={() => setSidebarOpen(false)}
-    >
-      Favorites
-    </Link>
-    <button onClick={toggleTheme} className="theme-toggle">
-      {theme === "light" ? <FaMoon /> : <FaSun />}
-    </button>
-  </div>
-</div>
-
-
+        <div className="sidebar-links">
+          <Link
+            to="/"
+            className={`nav-link ${location.pathname === "/" ? "active" : ""}`}
+            onClick={() => setSidebarOpen(false)}
+          >
+            Home
+          </Link>
+          <Link
+            to="/favorites"
+            className={`nav-link ${location.pathname === "/favorites" ? "active" : ""}`}
+            onClick={() => setSidebarOpen(false)}
+          >
+            Favorites
+          </Link>
+          <button onClick={toggleTheme} className="theme-toggle" aria-label="Toggle theme">
+            {theme === "light" ? <FaMoon /> : <FaSun />}
+          </button>
+        </div>
+      </div>
     </>
   );
 }

@@ -1,6 +1,4 @@
-
-
-const API_KEY = "afa55fa909ddb4c1268779fc487151dd";
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
 
@@ -30,7 +28,6 @@ export const discoverMovies = async (params, page = 1) => {
 export const getMovieDetails = async (movieId) => {
   const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&append_to_response=credits,videos`);
   const data = await response.json();
-  console.log('Movie Details Response:', data); // Debug log
   return data;
 };
 

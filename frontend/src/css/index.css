@@ -1,0 +1,124 @@
+/* ============================================================
+   Design Tokens & Global Reset
+   ============================================================ */
+
+:root {
+  /* Backgrounds — dark mode */
+  --bg-primary:    #0D1B1E;
+  --bg-secondary:  #1C2D30;
+  --bg-tertiary:   #243F42;
+  --bg-input:      #2A3D40;
+
+  /* Text — dark mode */
+  --text-primary:  #FFFFFF;
+  --text-secondary:#B0C0C2;   /* was #8A9A9C — now passes WCAG AA */
+  --text-muted:    #6E8082;
+
+  /* Accent — cinematic amber/gold instead of lime green */
+  --accent:        #E8B84B;
+  --accent-hover:  #D4A43A;
+  --accent-dark:   #B8861A;   /* used in light mode */
+
+  /* Status */
+  --error:         #CF6679;
+  --success:       #4CAF82;
+
+  /* Misc */
+  --radius-sm:     4px;
+  --radius-md:     8px;
+  --radius-lg:     12px;
+  --shadow-sm:     0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.45);
+  --transition:    0.25s ease;
+}
+
+/* Light mode overrides */
+[data-theme="light"] {
+  --bg-primary:    #FAFAF9;
+  --bg-secondary:  #FFFFFF;
+  --bg-tertiary:   #F0F0EE;
+  --bg-input:      #EBEBEA;
+
+  --text-primary:  #0D1B1E;
+  --text-secondary:#4A5E60;
+  --text-muted:    #7A8E90;
+
+  --accent:        #B8861A;
+  --accent-hover:  #A07415;
+  --shadow-sm:     0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.16);
+}
+
+/* ============================================================
+   Base Reset
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ============================================================
+   Scrollbar Styling
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ============================================================
+   Focus Styles (accessibility)
+   ============================================================ */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}

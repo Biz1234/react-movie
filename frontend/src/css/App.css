@@ -1,4 +1,5 @@
-/* App.css - Main application layout and components */
+/* App.css — layout shell */
+
 .app {
   min-height: 100vh;
   display: flex;
@@ -7,209 +8,93 @@
 
 .main-content {
   flex: 1;
-  padding-top: 80px; /* Account for fixed navbar */
 }
 
-/* Header/Footer styles if needed */
-.app-header {
-  background-color: var(--primary-dark);
-  color: var(--text-light);
-  padding: 1rem 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-body[data-theme="light"] .app-header {
-  background-color: var(--primary-light);
-  color: var(--text-dark);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.app-footer {
-  background-color: var(--primary-dark);
-  color: var(--text-light);
-  padding: 2rem 0;
-  text-align: center;
-  margin-top: auto;
-}
-
-body[data-theme="light"] .app-footer {
-  background-color: var(--primary-light);
-  color: var(--text-dark);
-}
-
-/* Button styles */
+/* ── Shared button primitives ────────────────────────────── */
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
   padding: 0.6rem 1.2rem;
-  background-color: var(--accent-green);
-  color: var(--primary-dark);
+  background-color: var(--accent);
+  color: #0D1B1E;
   border: none;
-  border-radius: var(--border-radius);
-  font-weight: 600;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: var(--transition);
+  transition: background-color var(--transition), transform var(--transition),
+    opacity var(--transition);
   text-decoration: none;
   text-align: center;
 }
 
 .btn:hover {
-  background-color: #7DCE76;
+  background-color: var(--accent-hover);
   transform: translateY(-2px);
 }
 
-.btn-secondary {
-  background-color: transparent;
-  border: 2px solid var(--accent-green);
-  color: var(--text-light);
-}
-
-body[data-theme="light"] .btn-secondary {
-  color: var(--text-dark);
-}
-
-.btn-secondary:hover {
-  background-color: var(--accent-green);
-  color: var(--primary-dark);
-}
-
 .btn:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
   transform: none;
 }
 
-/* Card styles */
-.card {
-  background-color: var(--bg-secondary-dark);
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: var(--transition);
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
 }
 
-body[data-theme="light"] .card {
-  background-color: var(--bg-secondary-light);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.btn-outline:hover {
+  background-color: var(--accent);
+  color: #0D1B1E;
+}
+
+/* ── Shared card ─────────────────────────────────────────── */
+.card {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
 }
 
-body[data-theme="light"] .card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
-
-/* Form styles */
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: var(--text-light);
-}
-
-body[data-theme="light"] .form-label {
-  color: var(--text-dark);
-}
-
-.form-input,
-.form-select,
-.form-textarea {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: none;
-  border-radius: var(--border-radius);
-  background-color: var(--bg-secondary-dark);
-  color: var(--text-light);
-  font-size: 1rem;
-  transition: var(--transition);
-}
-
-body[data-theme="light"] .form-input,
-body[data-theme="light"] .form-select,
-body[data-theme="light"] .form-textarea {
-  background-color: #EDEDED;
-  color: var(--text-dark);
-}
-
-.form-input:focus,
-.form-select:focus,
-.form-textarea:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--accent-green);
-}
-
-.form-textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-/* Alert/Message styles */
+/* ── Alert helpers ───────────────────────────────────────── */
 .alert {
-  padding: 1rem;
-  border-radius: var(--border-radius);
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius-md);
   margin-bottom: 1rem;
+  font-size: 0.95rem;
 }
 
 .alert-error {
-  background-color: rgba(207, 102, 121, 0.2);
-  color: var(--error-color);
-  border: 1px solid rgba(207, 102, 121, 0.3);
+  background-color: rgba(207, 102, 121, 0.12);
+  color: var(--error);
+  border: 1px solid rgba(207, 102, 121, 0.25);
 }
 
 .alert-success {
-  background-color: rgba(143, 227, 136, 0.2);
-  color: var(--success-color);
-  border: 1px solid rgba(143, 227, 136, 0.3);
+  background-color: rgba(76, 175, 130, 0.12);
+  color: var(--success);
+  border: 1px solid rgba(76, 175, 130, 0.25);
 }
 
-.alert-info {
-  background-color: rgba(79, 195, 247, 0.2);
-  color: #4FC3F7;
-  border: 1px solid rgba(79, 195, 247, 0.3);
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .main-content {
-    padding-top: 70px;
-  }
-  
-  .container {
-    padding: 0 0.5rem;
-  }
-  
-  .btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-  }
-  
-  .card {
-    padding: 1rem;
-  }
-}
-
-/* Print styles */
+/* ── Print ───────────────────────────────────────────────── */
 @media print {
   .navbar,
   .btn,
-  .favorite-btn {
+  .favorite-btn,
+  .back-button {
     display: none !important;
   }
-  
-  .main-content {
-    padding-top: 0;
-  }
-  
+
   body {
     color: #000;
     background: #fff;

@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getMovieDetails } from "../services/api";
+import { useMovieContext } from "../contexts/MovieContext";
 import "../css/MovieDetails.css";
-import ReactPlayer from 'react-player';
+import ReactPlayer from "react-player";
+import { FaHeart, FaArrowLeft, FaUser } from "react-icons/fa";
 
 function MovieDetails() {
   const { id } = useParams();
@@ -11,12 +13,15 @@ function MovieDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const { isFavorite, addToFavorites, removeFromFavorites } = useMovieContext();
+
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
     const loadMovie = async () => {
       try {
         const data = await getMovieDetails(id);
         setMovie(data);
-      } catch (err) {
+      } catch {
         setError("Failed to load movie details.");
       } finally {
         setLoading(false);
@@ -25,33 +30,45 @@ function MovieDetails() {
     loadMovie();
   }, [id]);
 
-  const handleGoBack = () => {
-    navigate(-1); // Go back to previous page
-  };
+  if (loading) return (
+    <div className="details-loading">
+      <div className="details-spinner" />
+      <p>Loading…</p>
+    </div>
+  );
 
-  if (loading) return <div className="loading">Loading movie details...</div>;
-  if (error) return <div className="error-message">{error}</div>;
+  if (error) return (
+    <div className="details-error">
+      <p>{error}</p>
+      <button onClick={() => navigate(-1)} className="back-button">
+        <FaArrowLeft /> Go Back
+      </button>
+    </div>
+  );
+
   if (!movie) return null;
 
-  // Find the official trailer
-  const trailer = movie.videos.results.find(
-    video => video.type === "Trailer" && video.site === "YouTube"
+  const favorite = isFavorite(movie.id);
+
+  const trailer = movie.videos?.results?.find(
+    (v) => v.type === "Trailer" && v.site === "YouTube"
   );
 
   return (
     <div className="movie-details">
       <div className="movie-container">
-        {/* Back Button */}
-        <button className="back-button" onClick={handleGoBack}>
-          ←  
+
+        {/* Back button */}
+        <button className="back-button" onClick={() => navigate(-1)}>
+          <FaArrowLeft /> Back
         </button>
 
-        {/* Backdrop with title overlay */}
+        {/* Backdrop */}
         {movie.backdrop_path && (
           <div className="movie-backdrop">
-            <img 
-              src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`} 
-              alt={movie.title} 
+            <img
+              src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
+              alt={movie.title}
             />
             <div className="backdrop-overlay">
               <h1 className="movie-title">{movie.title}</h1>
@@ -59,66 +76,88 @@ function MovieDetails() {
           </div>
         )}
 
+        {/* Poster + Info */}
         <div className="movie-content">
-          {/* Poster */}
-          <div className="movie-poster">
-            <img 
-              src={movie.poster_path 
-                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
-                : '/placeholder-movie.jpg'
-              } 
-              alt={movie.title} 
-            />
+          <div className="movie-poster-wrap">
+            {movie.poster_path ? (
+              <img
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt={movie.title}
+                className="movie-poster-img"
+              />
+            ) : (
+              <div className="no-poster-lg">🎬</div>
+            )}
           </div>
 
-          {/* Movie info */}
           <div className="movie-info">
+            {/* Meta stats */}
             <div className="movie-meta">
               <div className="meta-item">
-                <span className="meta-value">{movie.vote_average.toFixed(1)}</span>
+                <span className="meta-value">{movie.vote_average?.toFixed(1) ?? "N/A"}</span>
                 <span className="meta-label">Rating</span>
               </div>
               <div className="meta-item">
-                <span className="meta-value">{movie.runtime}</span>
+                <span className="meta-value">{movie.runtime ?? "—"}</span>
                 <span className="meta-label">Minutes</span>
               </div>
               <div className="meta-item">
-                <span className="meta-value">{movie.release_date.split("-")[0]}</span>
+                <span className="meta-value">{movie.release_date?.split("-")[0] ?? "—"}</span>
                 <span className="meta-label">Year</span>
               </div>
             </div>
 
-            <div>
-              <h3>Overview</h3>
-              <p className="movie-overview">{movie.overview}</p>
-            </div>
-
-            <div>
-              <h3>Genres</h3>
-              <div className="genre-list">
-                {movie.genres.map(genre => (
-                  <span key={genre.id} className="genre-tag">{genre.name}</span>
-                ))}
+            {/* Overview */}
+            {movie.overview && (
+              <div>
+                <h3 className="info-heading">Overview</h3>
+                <p className="movie-overview">{movie.overview}</p>
               </div>
-            </div>
+            )}
+
+            {/* Genres */}
+            {movie.genres?.length > 0 && (
+              <div>
+                <h3 className="info-heading">Genres</h3>
+                <div className="genre-list">
+                  {movie.genres.map((genre) => (
+                    <span key={genre.id} className="genre-tag">{genre.name}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Add / Remove Favorites */}
+            <button
+              className={`fav-detail-btn ${favorite ? "fav-detail-btn--active" : ""}`}
+              onClick={() =>
+                favorite ? removeFromFavorites(movie.id) : addToFavorites(movie)
+              }
+            >
+              <FaHeart />
+              {favorite ? "Remove from Saved" : "Save to Favorites"}
+            </button>
           </div>
         </div>
 
-        {/* Cast section */}
-        {movie.credits.cast.length > 0 && (
-          <div className="cast-section">
+        {/* Cast — horizontal scroll on mobile */}
+        {movie.credits?.cast?.length > 0 && (
+          <section className="cast-section">
             <h2 className="section-title">Cast</h2>
-            <div className="cast-grid">
-              {movie.credits.cast.slice(0, 12).map(person => (
+            <div className="cast-scroll">
+              {movie.credits.cast.slice(0, 12).map((person) => (
                 <div key={person.id} className="cast-card">
-                  <img 
-                    src={person.profile_path 
-                      ? `https://image.tmdb.org/t/p/w200${person.profile_path}` 
-                      : '/placeholder-person.jpg'
-                    } 
-                    alt={person.name} 
-                    className="cast-image"
-                  />
+                  {person.profile_path ? (
+                    <img
+                      src={`https://image.tmdb.org/t/p/w200${person.profile_path}`}
+                      alt={person.name}
+                      className="cast-image"
+                    />
+                  ) : (
+                    <div className="cast-placeholder">
+                      <FaUser className="cast-placeholder-icon" />
+                    </div>
+                  )}
                   <div className="cast-info">
                     <h4 className="cast-name">{person.name}</h4>
                     <p className="cast-character">{person.character}</p>
@@ -126,24 +165,25 @@ function MovieDetails() {
                 </div>
               ))}
             </div>
-          </div>
+          </section>
         )}
 
-        {/* Trailer section */}
+        {/* Trailer */}
         {trailer && (
-          <div className="trailer-section">
+          <section className="trailer-section">
             <h2 className="section-title">Trailer</h2>
             <div className="video-container">
-              <ReactPlayer 
-                url={`https://www.youtube.com/watch?v=${trailer.key}`} 
+              <ReactPlayer
+                url={`https://www.youtube.com/watch?v=${trailer.key}`}
                 width="100%"
                 height="100%"
                 controls
                 playing={false}
               />
             </div>
-          </div>
+          </section>
         )}
+
       </div>
     </div>
   );

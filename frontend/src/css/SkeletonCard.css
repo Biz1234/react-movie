@@ -1,0 +1,49 @@
+.skeleton-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+}
+
+.skeleton-poster {
+  aspect-ratio: 2 / 3;
+  width: 100%;
+}
+
+.skeleton-info {
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skeleton-title {
+  height: 1rem;
+  width: 85%;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-year {
+  height: 0.8rem;
+  width: 40%;
+  border-radius: var(--radius-sm);
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary)   25%,
+    var(--bg-tertiary)    50%,
+    var(--bg-secondary)   75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
